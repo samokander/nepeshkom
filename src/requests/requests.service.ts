@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { env } from 'src/const';
 import { NewRequestDto } from './dto/new-request.dto';
 import { RequestInfoDto } from './dto/request-info.dto';
+import { addRentRequestDto } from 'src/requests/dto/add-rent-request.dto';
 
 @Injectable()
 export class RequestsService {
@@ -11,8 +12,8 @@ export class RequestsService {
     
     async addRequest(newRequestDto: NewRequestDto) {
         let newRequestParams = {
-            clientIntegrationId: newRequestDto.clientIntegrationId,
-            inputData: newRequestDto.inputData,
+            ClientIntegrationId: newRequestDto.clientIntegrationId,
+            InputData: newRequestDto.inputData,
         }
         return this.httpService.post(
             env.xprokatApiUrl,
@@ -32,15 +33,69 @@ export class RequestsService {
 
     async getRequestInfo(requestInfoDto: RequestInfoDto) {
         let requestInfoParams = {
-            clientIntegrationId: requestInfoDto.clientIntegrationId,
-            objectId: requestInfoDto.objectId,
+            ClientIntegrationId: requestInfoDto.clientIntegrationId,
+            ObjectId: requestInfoDto.objectId,
         }
         return this.httpService.post(
             env.xprokatApiUrl,
             {
                 ApiKey: env.xprokatApiKey,
                 ApiVersion: 0,
-                Method: 'AddClient',
+                Method: 'GetRequestInfo',
+                Parameters: requestInfoParams,
+            }
+        )
+        .pipe(
+            map((response) => 
+              response.data.Result ? response.data.Result : response.data.Errors,
+            ),
+        );  
+    }
+
+    async addRentRequest(requestRentDto: addRentRequestDto) {
+        let requestRentParams = {
+            ClientIntegrationId: requestRentDto.clientIntegrationId,
+            ClientPhone: requestRentDto.clientPhone,
+            DocumentsUrls: requestRentDto.documentsUrls,
+            RequestDealTypeId: requestRentDto.requestDealTypeId,
+            RequestFilialId: requestRentDto.requestFilialId,
+            RentFilialFrom: requestRentDto.rentFilialFrom,
+            RentFilialTo: requestRentDto.rentFilialTo,
+            RentFromTime: requestRentDto.rentFromTime,
+            TarifId: requestRentDto.tarifId,
+            AutoId: requestRentDto.autoId,
+            DeliveryAddress: requestRentDto.deliveryAddress,
+            ReturnAddress: requestRentDto.returnAddress,
+            RequestSource: requestRentDto.requestSource,
+        }
+        return this.httpService
+        .post(
+            env.xprokatApiUrl,
+            {
+                ApiKey: env.xprokatApiKey,
+                ApiVersion: 0,
+                Method: 'AddRentRequest',
+                Parameters: requestRentParams,
+            }
+        )
+        .pipe(
+            map((response) => 
+              response.data.Result ? response.data.Result : response.data.Errors,
+            ),
+        );  
+    }
+
+    async getRentRequestInfo(rentRequestInfoDto: RequestInfoDto) {
+        let requestInfoParams = {
+            ClientIntegrationId: rentRequestInfoDto.clientIntegrationId,
+            ObjectId: rentRequestInfoDto.objectId,
+        }
+        return this.httpService.post(
+            env.xprokatApiUrl,
+            {
+                ApiKey: env.xprokatApiKey,
+                ApiVersion: 0,
+                Method: 'GetRentRequestInfo',
                 Parameters: requestInfoParams,
             }
         )

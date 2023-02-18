@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { map } from 'rxjs/operators';
 import { env } from 'src/const';
 import { SearchAutoInputDto } from './dto/search-auto-input.dto';
+import { GetAutoUsedIntervalsDto } from './dto/get-auto-used-intervals.dto';
 
 @Injectable()
 export class AutosService {
@@ -42,19 +43,19 @@ export class AutosService {
 
   async searchAutos(params: SearchAutoInputDto) {
     let searchAutosParams = {
-      dateFrom: params.dateFrom,
-      dateTo: params.dateTo,
-      autoClasses: params.autoClasses,
-      filialId: params.filialId,
-      brands: params.brands,
-      colors: params.colors,
-      transmissions: params.transmissions,
-      bodyTypes: params.bodyTypes,
-      privodTypes: params.privodTypes,
-      expectedProlongation: params.expectedProlongation,
-      viewInDay: params.viewInDay,
-      viewMovements: params.viewMovements,
-      viewRepairs: params.viewRepairs,
+      DateFrom: params.dateFrom,
+      DateTo: params.dateTo,
+      AutoClasses: params.autoClasses,
+      FilialId: params.filialId,
+      Brands: params.brands,
+      Colors: params.colors,
+      Transmissions: params.transmissions,
+      BodyTypes: params.bodyTypes,
+      PrivodTypes: params.privodTypes,
+      ExpectedProlongation: params.expectedProlongation,
+      ViewInDay: params.viewInDay,
+      ViewMovements: params.viewMovements,
+      ViewRepairs: params.viewRepairs,
       CleanRequestReservs: params.CleanRequestReservs,
       DefaultPriceFrom: params.DefaultPriceFrom,
       DefaultPriceTo: params.DefaultPriceTo,
@@ -91,4 +92,26 @@ export class AutosService {
         ),
       );
   }
+
+  async getAutoUsedIntervals(getIntervalsDto: GetAutoUsedIntervalsDto) {
+    let autoIntervalsParams = {
+      ObjectId: getIntervalsDto.objectId,
+      DateFrom: getIntervalsDto.dateFrom,
+      DateTo: getIntervalsDto.dateTo
+    }
+    return this.httpService
+    .post(env.xprokatApiUrl, {
+      ApiKey: env.xprokatApiKey,
+        ApiVersion: 500,
+        Method: 'GetAutoUsedIntervals',
+        Parameters: autoIntervalsParams
+      })
+      .pipe(
+        map((response) => 
+          response.data.Result ? response.data.Result : response.data.Errors,
+        ),
+      );
+  }
+
+  
 }

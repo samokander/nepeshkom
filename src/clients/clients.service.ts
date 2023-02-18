@@ -7,6 +7,7 @@ import { AddClientDto } from './dto/add-client.dto';
 @Injectable()
 export class ClientsService {
   constructor(private readonly httpService: HttpService) {}
+
   async getAllClients() {
     return this.httpService
       .post(
@@ -29,9 +30,9 @@ export class ClientsService {
 
   async addClient(newClientDto: AddClientDto) {
     let newClientParams = {
-      phoneNumber: newClientDto.phoneNumber,
-      clientName: newClientDto.clientName,
-      promoCode: newClientDto.promoCode,
+      PhoneNumber: newClientDto.phoneNumber,
+      ClientName: newClientDto.clientName,
+      PromoCode: newClientDto.promoCode,
     }
     return this.httpService.post(
       env.xprokatApiUrl,
@@ -48,4 +49,5 @@ export class ClientsService {
       ),
     );
   }
+
 }
