@@ -12,6 +12,6 @@ export class ClientsController {
 
   @Post()
   async newClient(@Body() addClientDto: AddClientDto) {
-    return await this.clientsService.addClient(addClientDto)
+    return await this.clientsService.addClient(addClientDto);
   }
 }
