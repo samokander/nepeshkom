@@ -1,8 +1,8 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { map } from 'rxjs/operators';
-import { env } from 'src/const';
 import { AddClientDto } from './dto/add-client.dto';
+import { env } from 'src/const';
 
 @Injectable()
 export class ClientsService {
@@ -10,17 +10,14 @@ export class ClientsService {
 
   async getAllClients() {
     return this.httpService
-      .post(
-        env.xprokatApiUrl,
-        {
-          ApiKey: env.xprokatApiKey,
-          ApiVersion: 0,
-          Method: 'GetClients',
-          Parameters: {
-            PhoneNumber: '70000000000',
-          },
+      .post(env.xprokatApiUrl, {
+        ApiKey: env.xprokatApiKey,
+        ApiVersion: 0,
+        Method: 'GetClients',
+        Parameters: {
+          PhoneNumber: '70000000000',
         },
-      )
+      })
       .pipe(
         map((response) =>
           response.data.Result ? response.data.Result : response.data.Errors,
@@ -29,25 +26,22 @@ export class ClientsService {
   }
 
   async addClient(newClientDto: AddClientDto) {
-    let newClientParams = {
+    const newClientParams = {
       PhoneNumber: newClientDto.phoneNumber,
       ClientName: newClientDto.clientName,
       PromoCode: newClientDto.promoCode,
-    }
-    return this.httpService.post(
-      env.xprokatApiUrl,
-      {
+    };
+    return this.httpService
+      .post(env.xprokatApiUrl, {
         ApiKey: env.xprokatApiKey,
         ApiVersion: 0,
         Method: 'AddClient',
         Parameters: newClientParams,
-      },
-    )
-    .pipe(
-      map((response) => 
-        response.data.Result ? response.data.Result : response.data.Errors,
-      ),
-    );
+      })
+      .pipe(
+        map((response) =>
+          response.data.Result ? response.data.Result : response.data.Errors,
+        ),
+      );
   }
-
 }
