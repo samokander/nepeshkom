@@ -37,14 +37,14 @@ export class AutosController {
     return await this.autosService.getAutoUsedIntervals(body);
   }
 
-  @Get('/:id')
-  async getAutoById(@Param('id') autoId: number) {
-    return await this.autosService.getAutoById(autoId);
-  }
-
   @Get('/get-filter-params')
   @UseInterceptors(FiltersInterceptor)
   async getFiltersParams() {
     return await this.autosService.getFilterParams();
+  }
+
+  @Get('/:id')
+  async getAutoById(@Param('id') autoId: number) {
+    return await this.autosService.getAutoById(autoId);
   }
 }
