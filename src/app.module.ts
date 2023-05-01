@@ -11,10 +11,31 @@ import { AutosController } from './autos/autos.controller';
 import { RequestsController } from './requests/requests.controller';
 import { RequestsService } from './requests/requests.service';
 import { RequestsModule } from './requests/requests.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { configService } from './config/config.service';
+import { ModelsModule } from './models/models.module';
+import { ContentPagesService } from './content-pages/content-pages.service';
+import { ContentPagesModule } from './content-pages/content-pages.module';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
 
 @Module({
-  imports: [HttpModule, ClientsModule, AutosModule, RequestsModule],
-  controllers: [AppController, ClientsController, AutosController, RequestsController],
+  imports: [
+    TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
+    HttpModule,
+    ClientsModule,
+    AutosModule,
+    RequestsModule,
+    ModelsModule,
+    ContentPagesModule,
+  ],
+  controllers: [
+    AppController,
+    ClientsController,
+    AutosController,
+    RequestsController,
+  ],
   providers: [AppService, ClientsService, AutosService, RequestsService],
 })
 export class AppModule {}
