@@ -13,7 +13,9 @@ import { RequestsService } from './requests/requests.service';
 import { RequestsModule } from './requests/requests.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './config/config.service';
-import models from './model';
+import { ModelsModule } from './models/models.module';
+import { ContentPagesService } from './content-pages/content-pages.service';
+import { ContentPagesModule } from './content-pages/content-pages.module';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -25,6 +27,8 @@ require('dotenv').config();
     ClientsModule,
     AutosModule,
     RequestsModule,
+    ModelsModule,
+    ContentPagesModule,
   ],
   controllers: [
     AppController,
