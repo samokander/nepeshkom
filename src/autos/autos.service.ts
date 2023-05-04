@@ -4,6 +4,9 @@ import { map } from 'rxjs/operators';
 import { env } from 'src/const';
 import { SearchAutoInputDto } from './dto/search-auto-input.dto';
 import { GetAutoUsedIntervalsDto } from './dto/get-auto-used-intervals.dto';
+import { SearchAutosWithFullAutoDataDto } from './dto/search-autos-with-full-auto-data.dto';
+import { DictValueDto } from './dto/dict-value.dto';
+import { ObjectRequestParams } from './dto/object-request-params.dto';
 
 @Injectable()
 export class AutosService {
@@ -61,7 +64,7 @@ export class AutosService {
       DefaultPriceTo: params.DefaultPriceTo,
       PowerLSFrom: params.PowerLSFrom,
       PowerLsTo: params.PowerLsTo,
-    }
+    };
     return this.httpService
       .post(env.xprokatApiUrl, {
         ApiKey: env.xprokatApiKey,
@@ -76,18 +79,16 @@ export class AutosService {
       );
   }
 
-  async getAutoInfo(autoId: number) {
+  async getAutoInfo(id: ObjectRequestParams) {
     return this.httpService
       .post(env.xprokatApiUrl, {
         ApiKey: env.xprokatApiKey,
         ApiVersion: 500,
         Method: 'GetAutoInfo',
-        Parameters: {
-          ObjectId: autoId
-        },
+        Parameters: id,
       })
       .pipe(
-        map((response) => 
+        map((response) =>
           response.data.Result ? response.data.Result : response.data.Errors,
         ),
       );
@@ -97,21 +98,71 @@ export class AutosService {
     let autoIntervalsParams = {
       ObjectId: getIntervalsDto.objectId,
       DateFrom: getIntervalsDto.dateFrom,
-      DateTo: getIntervalsDto.dateTo
-    }
+      DateTo: getIntervalsDto.dateTo,
+    };
     return this.httpService
-    .post(env.xprokatApiUrl, {
-      ApiKey: env.xprokatApiKey,
+      .post(env.xprokatApiUrl, {
+        ApiKey: env.xprokatApiKey,
         ApiVersion: 500,
         Method: 'GetAutoUsedIntervals',
-        Parameters: autoIntervalsParams
+        Parameters: autoIntervalsParams,
       })
       .pipe(
-        map((response) => 
+        map((response) =>
           response.data.Result ? response.data.Result : response.data.Errors,
         ),
       );
   }
 
-  
+  async searchAutosWithFullAutoData(
+    searchWithFulLData: SearchAutosWithFullAutoDataDto,
+  ) {
+    let searchWithFullDataParams = {
+      DateFrom: searchWithFulLData.dateFrom,
+      DateTo: searchWithFulLData.dateTo,
+      AutoClasses: searchWithFulLData.autoClasses,
+      FilialId: searchWithFulLData.filialId,
+      Brands: searchWithFulLData.brands,
+      Colors: searchWithFulLData.colors,
+      Transmissions: searchWithFulLData.transmissions,
+      BodyTypes: searchWithFulLData.bodyTypes,
+      PrivodTypes: searchWithFulLData.privodTypes,
+      ExpectedProlongation: searchWithFulLData.expectedProlongation,
+      ViewInDay: searchWithFulLData.viewInDay,
+      ViewMovements: searchWithFulLData.viewMovements,
+      ViewRepairs: searchWithFulLData.viewRepairs,
+      CleanRequestReservs: searchWithFulLData.CleanRequestReservs,
+      DefaultPriceFrom: searchWithFulLData.DefaultPriceFrom,
+      DefaultPriceTo: searchWithFulLData.DefaultPriceTo,
+      PowerLSFrom: searchWithFulLData.PowerLSFrom,
+      PowerLsTo: searchWithFulLData.PowerLsTo,
+    };
+    return this.httpService
+      .post(env.xprokatApiUrl, {
+        ApiKey: env.xprokatApiKey,
+        ApiVersion: 500,
+        Method: 'SearchAutosWithFullAutoData',
+        Parameters: searchWithFullDataParams,
+      })
+      .pipe(
+        map((response) =>
+          response.data.Result ? response.data.Result : response.data.Errors,
+        ),
+      );
+  }
+
+  async getFilterParams() {
+    return this.httpService
+      .post(env.xprokatApiUrl, {
+        ApiKey: env.xprokatApiKey,
+        ApiVersion: 500,
+        Method: 'GetFilterParams',
+        Parameters: {},
+      })
+      .pipe(
+        map((response) =>
+          response.data.Result ? response.data.Result : response.data.Errors,
+        ),
+      );
+  }
 }
