@@ -4,24 +4,27 @@ import { map } from 'rxjs/operators';
 import { env } from 'src/const';
 import { AddSumDto } from './dto/add-client-account-sum.dto';
 import { AddClientDto } from './dto/add-client.dto';
+import { GetClientsDto } from './dto/get-clients.dto';
 
 @Injectable()
 export class ClientsService {
   constructor(private readonly httpService: HttpService) {}
 
-  async getAllClients() {
+  async getClient(getClientsDto: GetClientsDto) {
+    const params = {
+      PhoneNumber: getClientsDto.phoneNumber,
+      PassportSeries: getClientsDto.passportSeries,
+      PassportNumber: getClientsDto.passportNumber,
+      BirthData: getClientsDto.birthData,
+      Integrationid: getClientsDto.integrationid,
+    };
     return this.httpService
-      .post(
-        env.xprokatApiUrl,
-        {
-          ApiKey: env.xprokatApiKey,
-          ApiVersion: 0,
-          Method: 'GetClients',
-          Parameters: {
-            PhoneNumber: '70000000000',
-          },
-        },
-      )
+      .post(env.xprokatApiUrl, {
+        ApiKey: env.xprokatApiKey,
+        ApiVersion: 0,
+        Method: 'GetClients',
+        Parameters: params,
+      })
       .pipe(
         map((response) =>
           response.data.Result ? response.data.Result : response.data.Errors,
@@ -30,29 +33,27 @@ export class ClientsService {
   }
 
   async addClient(newClientDto: AddClientDto) {
-    let newClientParams = {
+    const newClientParams = {
       PhoneNumber: newClientDto.phoneNumber,
       ClientName: newClientDto.clientName,
       PromoCode: newClientDto.promoCode,
-    }
-    return this.httpService.post(
-      env.xprokatApiUrl,
-      {
+    };
+    return this.httpService
+      .post(env.xprokatApiUrl, {
         ApiKey: env.xprokatApiKey,
         ApiVersion: 0,
         Method: 'AddClient',
         Parameters: newClientParams,
-      },
-    )
-    .pipe(
-      map((response) => 
-        response.data.Result ? response.data.Result : response.data.Errors,
-      ),
-    );
+      })
+      .pipe(
+        map((response) =>
+          response.data.Result ? response.data.Result : response.data.Errors,
+        ),
+      );
   }
 
-  async addClientAccountSum(addSumDto: AddSumDto){
-    let addSumParams = {
+  async addClientAccountSum(addSumDto: AddSumDto) {
+    const addSumParams = {
       clientIntegrationId: addSumDto.clientIntegrationId,
       clientPhone: addSumDto.clientPhone,
       sum: addSumDto.sum,
@@ -61,16 +62,12 @@ export class ClientsService {
       defaultCompanyId: addSumDto.defaultCompanyId,
       comment: addSumDto.comment,
       tokenInfo: addSumDto.tokenInfo,
-    }
-    return this.httpService.post(
-      env.xprokatApiUrl,
-      {
-        ApiKey: env.xprokatApiKey,
-        ApiVersion: 0,
-        Method: 'AddClientAccountSum',
-        Parameters: addSumParams,
-      },
-    )
+    };
+    return this.httpService.post(env.xprokatApiUrl, {
+      ApiKey: env.xprokatApiKey,
+      ApiVersion: 0,
+      Method: 'AddClientAccountSum',
+      Parameters: addSumParams,
+    });
   }
-
 }
