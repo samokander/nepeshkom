@@ -10,17 +10,17 @@ import { GetRentRequestsDto } from './dto/get-rent-requests.dto';
 export class RequestsController {
   constructor(private readonly requestsService: RequestsService) {}
 
-  @Post()
+  @Post('/add-request')
   async newRequest(@Body() newRequestDto: NewRequestDto) {
     return await this.requestsService.addRequest(newRequestDto);
   }
 
-  @Post()
+  @Post('/add-rent-request')
   async addRentRequest(@Body() requestRentDto: addRentRequestDto) {
     return await this.requestsService.addRentRequest(requestRentDto);
   }
 
-  @Post()
+  @Post('/add-verification-request')
   async addVerificationRequest(
     @Body() addVerificationRequestDto: AddVerificationRequestDto,
   ) {
