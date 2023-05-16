@@ -99,4 +99,24 @@ export class RequestsService {
         ),
       );
   }
+
+  async addVerificationRequest(
+    addVerificationRequest: AddVerificationRequestDto,
+  ) {
+    const params = {
+      ClientIntegrationId: addVerificationRequest.ClientIntegrationId,
+      ClientPhone: addVerificationRequest.ClientPhone,
+      RequestSource: addVerificationRequest.RequestSource,
+      DocumentUrls: addVerificationRequest.DocumentsUrls,
+      RequestDealTypeId: addVerificationRequest.RequestDealTypeId,
+      RequestFilialId: addVerificationRequest.RequestFilialId,
+    };
+
+    return this.httpService.post(env.xprokatApiUrl, {
+      ApiKey: env.xprokatApiKey,
+      ApiVersion: 0,
+      Method: 'AddVerificationRequest',
+      Parameters: params,
+    });
+  }
 }
