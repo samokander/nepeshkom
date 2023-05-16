@@ -16,6 +16,9 @@ import { configService } from './config/config.service';
 import { ModelsModule } from './models/models.module';
 import { ContentPagesService } from './content-pages/content-pages.service';
 import { ContentPagesModule } from './content-pages/content-pages.module';
+import { AuthService } from './auth/auth.service';
+import { AuthModule } from './auth/auth.module';
+import { SMSRuModule } from 'node-sms-ru/nestjs';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -29,6 +32,7 @@ require('dotenv').config();
     RequestsModule,
     ModelsModule,
     ContentPagesModule,
+    AuthModule,
   ],
   controllers: [
     AppController,
@@ -36,6 +40,12 @@ require('dotenv').config();
     AutosController,
     RequestsController,
   ],
-  providers: [AppService, ClientsService, AutosService, RequestsService],
+  providers: [
+    AppService,
+    ClientsService,
+    AutosService,
+    RequestsService,
+    AuthService,
+  ],
 })
 export class AppModule {}

@@ -9,14 +9,14 @@ import { env } from 'src/const';
 export class ClientsService {
   constructor(private readonly httpService: HttpService) {}
 
-  async getAllClients() {
-    return this.httpService
+  async getAllClients({ phoneNumber }) {
+    return await this.httpService
       .post(env.xprokatApiUrl, {
         ApiKey: env.xprokatApiKey,
         ApiVersion: 0,
         Method: 'GetClients',
         Parameters: {
-          PhoneNumber: '70000000000',
+          PhoneNumber: phoneNumber,
         },
       })
       .pipe(
@@ -46,8 +46,8 @@ export class ClientsService {
       );
   }
 
-  async addClientAccountSum(addSumDto: AddSumDto){
-    let addSumParams = {
+  async addClientAccountSum(addSumDto: AddSumDto) {
+    const addSumParams = {
       clientIntegrationId: addSumDto.clientIntegrationId,
       clientPhone: addSumDto.clientPhone,
       sum: addSumDto.sum,
@@ -56,16 +56,12 @@ export class ClientsService {
       defaultCompanyId: addSumDto.defaultCompanyId,
       comment: addSumDto.comment,
       tokenInfo: addSumDto.tokenInfo,
-    }
-    return this.httpService.post(
-      env.xprokatApiUrl,
-      {
-        ApiKey: env.xprokatApiKey,
-        ApiVersion: 0,
-        Method: 'AddClientAccountSum',
-        Parameters: addSumParams,
-      },
-    )
+    };
+    return this.httpService.post(env.xprokatApiUrl, {
+      ApiKey: env.xprokatApiKey,
+      ApiVersion: 0,
+      Method: 'AddClientAccountSum',
+      Parameters: addSumParams,
+    });
   }
-
 }

@@ -5,6 +5,7 @@ import { env } from 'src/const';
 import { NewRequestDto } from './dto/new-request.dto';
 import { RequestInfoDto } from './dto/request-info.dto';
 import { addRentRequestDto } from 'src/requests/dto/add-rent-request.dto';
+import { REQUEST_SOURCE } from './consts';
 
 @Injectable()
 export class RequestsService {
@@ -58,12 +59,14 @@ export class RequestsService {
       RentFilialFrom: requestRentDto.rentFilialFrom,
       RentFilialTo: requestRentDto.rentFilialTo,
       RentFromTime: requestRentDto.rentFromTime,
+      RentToTime: requestRentDto.rentToTime,
       TarifId: requestRentDto.tarifId,
       AutoId: requestRentDto.autoId,
       DeliveryAddress: requestRentDto.deliveryAddress,
       ReturnAddress: requestRentDto.returnAddress,
-      RequestSource: requestRentDto.requestSource,
+      RequestSource: REQUEST_SOURCE,
     };
+    console.log(requestRentDto)
     return this.httpService
       .post(env.xprokatApiUrl, {
         ApiKey: env.xprokatApiKey,

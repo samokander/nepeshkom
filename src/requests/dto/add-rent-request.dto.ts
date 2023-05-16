@@ -11,7 +11,8 @@ export class addRentRequestDto {
     // Код филиала, в который будет помещена созданная заявка
     requestFilialId: number;
     // Филиал передачи авто клиенту
-    rentFilialFrom: number;
+    rentFilialFrom: string;
+    rentToTime: string;
     // Филиал возврата авто клиентом. Если не задано, то берется значение RentFilialFrom 
     rentFilialTo?: number;
     //Дата начала аренда в формате dd.MM.yyyy HH:mm:ss в UTC
