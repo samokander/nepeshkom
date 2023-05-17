@@ -10,20 +10,15 @@ import { env } from 'src/const';
 export class ClientsService {
   constructor(private readonly httpService: HttpService) {}
 
-  async getClient(getClientsDto: GetClientsDto) {
-    const params = {
-      PhoneNumber: getClientsDto.phoneNumber,
-      PassportSeries: getClientsDto.passportSeries,
-      PassportNumber: getClientsDto.passportNumber,
-      BirthData: getClientsDto.birthData,
-      Integrationid: getClientsDto.integrationid,
-    };
-    return this.httpService
+  async getAllClients({ phoneNumber }) {
+    return await this.httpService
       .post(env.xprokatApiUrl, {
         ApiKey: env.xprokatApiKey,
         ApiVersion: 0,
         Method: 'GetClients',
-        Parameters: params,
+        Parameters: {
+          PhoneNumber: phoneNumber,
+        },
       })
       .pipe(
         map((response) =>
@@ -52,6 +47,8 @@ export class ClientsService {
       );
   }
 
+  async addClientAccountSum(addSumDto: AddSumDto) {
+    const addSumParams = {
   async addClientAccountSum(addSumDto: AddSumDto) {
     const addSumParams = {
       clientIntegrationId: addSumDto.clientIntegrationId,

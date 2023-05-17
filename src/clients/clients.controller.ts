@@ -7,9 +7,10 @@ import { GetClientsDto } from './dto/get-clients.dto';
 @Controller('clients')
 export class ClientsController {
   constructor(private readonly clientsService: ClientsService) {}
-  @Get()
-  async getClient(@Body() getClientsDto: GetClientsDto) {
-    return await this.clientsService.getClient(getClientsDto);
+
+  @Post()
+  async getClients(@Body() body) {
+    return await this.clientsService.getAllClients(body);
   }
 
   @Post('/create-client')
@@ -17,8 +18,8 @@ export class ClientsController {
     return await this.clientsService.addClient(addClientDto);
   }
 
-  @Post('/add-client-account-sum')
-  async addClientAccountSum(@Body() addSumDto: AddSumDto) {
-    return await this.clientsService.addClientAccountSum(addSumDto);
-  }
+  // @Post()
+  // async addClientAccountSum(@Body() addSumDto: AddSumDto) {
+  //   return await this.clientsService.addClientAccountSum(addSumDto);
+  // }
 }

@@ -10,11 +10,6 @@ import { ObjectRequestParams } from './dto/object-request-params.dto';
 export class AutosController {
   constructor(private readonly autosService: AutosService) {}
 
-  @Get()
-  async getAllAutos() {
-    return await this.autosService.getAllAutos();
-  }
-
   @Get('/search')
   async searchAutos(@Body() body: SearchAutoInputDto) {
     return await this.autosService.searchAutos(body);
@@ -32,7 +27,7 @@ export class AutosController {
     return await this.autosService.getAutoInfo(body);
   }
 
-  @Get()
+  @Get('/get-rents')
   async getAutoUsedIntervals(@Body() body: GetAutoUsedIntervalsDto) {
     return await this.autosService.getAutoUsedIntervals(body);
   }
@@ -46,5 +41,10 @@ export class AutosController {
   @Get('/:id')
   async getAutoById(@Param('id') autoId: number) {
     return await this.autosService.getAutoById(autoId);
+  }
+
+  @Get()
+  async getAllAutos() {
+    return await this.autosService.getAllAutos();
   }
 }

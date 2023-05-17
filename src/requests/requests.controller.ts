@@ -15,6 +15,30 @@ export class RequestsController {
     return await this.requestsService.addRequest(newRequestDto);
   }
 
+  @Post('add-rent')
+  async addRentRequest(@Body() addRentRequestDto: addRentRequestDto) {
+    return await this.requestsService.addRentRequest(addRentRequestDto);
+  }
+
+  @Post('/add-verification-request')
+  async addVerificationRequest(
+    @Body() addVerificationRequestDto: AddVerificationRequestDto,
+  ) {
+    return await this.requestsService.addVerificationRequest(
+      addVerificationRequestDto,
+    );
+  }
+
+  @Get('/get-request-info')
+  async getRequestInfo(@Body() getRequestDto: RequestInfoDto) {
+    return await this.requestsService.getRequestInfo(getRequestDto);
+  }
+
+  @Get('/get-rent-request-info')
+  async getRentRequestInfo(@Body() rentRequestInfoDto: RequestInfoDto) {
+    return await this.requestsService.getRentRequestInfo(rentRequestInfoDto);
+  }
+
   @Post('/add-rent-request')
   async addRentRequest(@Body() requestRentDto: addRentRequestDto) {
     return await this.requestsService.addRentRequest(requestRentDto);

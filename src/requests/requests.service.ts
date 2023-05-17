@@ -5,9 +5,7 @@ import { env } from 'src/const';
 import { NewRequestDto } from './dto/new-request.dto';
 import { RequestInfoDto } from './dto/request-info.dto';
 import { addRentRequestDto } from 'src/requests/dto/add-rent-request.dto';
-import { AddVerificationRequestDto } from './dto/add-verification-request.dto';
-import { SimpleOutputDto } from 'src/dto/simple-outpu.dto';
-import { GetRentRequestsDto } from './dto/get-rent-requests.dto';
+import { REQUEST_SOURCE } from './consts';
 
 @Injectable()
 export class RequestsService {
@@ -61,18 +59,39 @@ export class RequestsService {
       RentFilialFrom: requestRentDto.rentFilialFrom,
       RentFilialTo: requestRentDto.rentFilialTo,
       RentFromTime: requestRentDto.rentFromTime,
+      RentToTime: requestRentDto.rentToTime,
       TarifId: requestRentDto.tarifId,
       AutoId: requestRentDto.autoId,
       DeliveryAddress: requestRentDto.deliveryAddress,
       ReturnAddress: requestRentDto.returnAddress,
-      RequestSource: requestRentDto.requestSource,
+      RequestSource: REQUEST_SOURCE,
     };
+    console.log(requestRentDto)
     return this.httpService
       .post(env.xprokatApiUrl, {
         ApiKey: env.xprokatApiKey,
         ApiVersion: 0,
         Method: 'AddRentRequest',
         Parameters: requestRentParams,
+      })
+      .pipe(
+        map((response) =>
+          response.data.Result ? response.data.Result : response.data.Errors,
+        ),
+      );
+  }
+
+  async getRentRequestInfo(rentRequestInfoDto: RequestInfoDto) {
+    const requestInfoParams = {
+      ClientIntegrationId: rentRequestInfoDto.clientIntegrationId,
+      ObjectId: rentRequestInfoDto.objectId,
+    };
+    return this.httpService
+      .post(env.xprokatApiUrl, {
+        ApiKey: env.xprokatApiKey,
+        ApiVersion: 0,
+        Method: 'GetRentRequestInfo',
+        Parameters: requestInfoParams,
       })
       .pipe(
         map((response) =>
@@ -99,44 +118,5 @@ export class RequestsService {
       Method: 'AddVerificationRequest',
       Parameters: params,
     });
-  }
-
-  async getRentRequestInfo(rentRequestInfoDto: RequestInfoDto) {
-    const requestInfoParams = {
-      ClientIntegrationId: rentRequestInfoDto.clientIntegrationId,
-      ObjectId: rentRequestInfoDto.objectId,
-    };
-    return this.httpService
-      .post(env.xprokatApiUrl, {
-        ApiKey: env.xprokatApiKey,
-        ApiVersion: 0,
-        Method: 'GetRentRequestInfo',
-        Parameters: requestInfoParams,
-      })
-      .pipe(
-        map((response) =>
-          response.data.Result ? response.data.Result : response.data.Errors,
-        ),
-      );
-  }
-
-  async getRentRequests(getRentRequestsDto: GetRentRequestsDto) {
-    const params = {
-      ClientIntegrationId: getRentRequestsDto.clientIntegrationId,
-      RentRequestDealTypeId: getRentRequestsDto.rentRequestDealTypeId,
-      States: getRentRequestsDto.states,
-    };
-    return this.httpService
-      .post(env.xprokatApiKey, {
-        ApiKey: env.xprokatApiKey,
-        ApiVersion: 0,
-        Method: 'GetRentRequests',
-        Parameters: params,
-      })
-      .pipe(
-        map((response) =>
-          response.data.Result ? response.data.Result : response.data.Errors,
-        ),
-      );
   }
 }
