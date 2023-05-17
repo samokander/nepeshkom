@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { map } from 'rxjs/operators';
 import { AddSumDto } from './dto/add-client-account-sum.dto';
 import { AddClientDto } from './dto/add-client.dto';
+import { GetClientsDto } from './dto/get-clients.dto';
 import { env } from 'src/const';
 
 @Injectable()
@@ -46,6 +47,8 @@ export class ClientsService {
       );
   }
 
+  async addClientAccountSum(addSumDto: AddSumDto) {
+    const addSumParams = {
   async addClientAccountSum(addSumDto: AddSumDto) {
     const addSumParams = {
       clientIntegrationId: addSumDto.clientIntegrationId,

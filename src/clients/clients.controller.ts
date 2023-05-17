@@ -2,6 +2,7 @@ import { Controller, Get, Post, Param, Body } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { AddSumDto } from './dto/add-client-account-sum.dto';
 import { AddClientDto } from './dto/add-client.dto';
+import { GetClientsDto } from './dto/get-clients.dto';
 
 @Controller('clients')
 export class ClientsController {
@@ -12,7 +13,7 @@ export class ClientsController {
     return await this.clientsService.getAllClients(body);
   }
 
-  @Post()
+  @Post('/create-client')
   async newClient(@Body() addClientDto: AddClientDto) {
     return await this.clientsService.addClient(addClientDto);
   }
