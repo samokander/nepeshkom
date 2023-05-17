@@ -59,11 +59,11 @@ export class AutosService {
       ViewInDay: params.viewInDay,
       ViewMovements: params.viewMovements,
       ViewRepairs: params.viewRepairs,
-      CleanRequestReservs: params.CleanRequestReservs,
-      DefaultPriceFrom: params.DefaultPriceFrom,
-      DefaultPriceTo: params.DefaultPriceTo,
-      PowerLSFrom: params.PowerLSFrom,
-      PowerLsTo: params.PowerLsTo,
+      CleanRequestReservs: params.cleanRequestReservs,
+      DefaultPriceFrom: params.defaultPriceFrom,
+      DefaultPriceTo: params.defaultPriceTo,
+      PowerLSFrom: params.powerLSFrom,
+      PowerLsTo: params.powerLsTo,
     };
     return this.httpService
       .post(env.xprokatApiUrl, {
