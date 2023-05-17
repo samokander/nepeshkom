@@ -45,7 +45,7 @@ export class AutosService {
   }
 
   async searchAutos(params: SearchAutoInputDto) {
-    let searchAutosParams = {
+    const searchAutosParams = {
       DateFrom: params.dateFrom,
       DateTo: params.dateTo,
       AutoClasses: params.autoClasses,
@@ -95,7 +95,7 @@ export class AutosService {
   }
 
   async getAutoUsedIntervals(getIntervalsDto: GetAutoUsedIntervalsDto) {
-    let autoIntervalsParams = {
+    const autoIntervalsParams = {
       ObjectId: getIntervalsDto.objectId,
       DateFrom: getIntervalsDto.dateFrom,
       DateTo: getIntervalsDto.dateTo,
@@ -117,7 +117,7 @@ export class AutosService {
   async searchAutosWithFullAutoData(
     searchWithFulLData: SearchAutosWithFullAutoDataDto,
   ) {
-    let searchWithFullDataParams = {
+    const searchWithFullDataParams = {
       DateFrom: searchWithFulLData.dateFrom,
       DateTo: searchWithFulLData.dateTo,
       AutoClasses: searchWithFulLData.autoClasses,
@@ -131,11 +131,11 @@ export class AutosService {
       ViewInDay: searchWithFulLData.viewInDay,
       ViewMovements: searchWithFulLData.viewMovements,
       ViewRepairs: searchWithFulLData.viewRepairs,
-      CleanRequestReservs: searchWithFulLData.CleanRequestReservs,
-      DefaultPriceFrom: searchWithFulLData.DefaultPriceFrom,
-      DefaultPriceTo: searchWithFulLData.DefaultPriceTo,
-      PowerLSFrom: searchWithFulLData.PowerLSFrom,
-      PowerLsTo: searchWithFulLData.PowerLsTo,
+      CleanRequestReservs: searchWithFulLData.cleanRequestReservs,
+      DefaultPriceFrom: searchWithFulLData.defaultPriceFrom,
+      DefaultPriceTo: searchWithFulLData.defaultPriceTo,
+      PowerLSFrom: searchWithFulLData.powerLSFrom,
+      PowerLsTo: searchWithFulLData.powerLsTo,
     };
     return this.httpService
       .post(env.xprokatApiUrl, {

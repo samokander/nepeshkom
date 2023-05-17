@@ -19,13 +19,13 @@ export class SearchAutoInputDto {
     // отобразить ТС на ремонта
     readonly viewRepairs?: boolean;
     //отобразить ТС без заявок на указанные даты
-    readonly CleanRequestReservs?: boolean;
+    readonly cleanRequestReservs?: boolean;
     //базовая цена ОТ (применятся в фильтре если > 0)
-	readonly DefaultPriceFrom?: number;
+	readonly defaultPriceFrom?: number;
 	//базовая цена ДО (применятся в фильтре если > 0) 
-	readonly DefaultPriceTo?: number;
+	readonly defaultPriceTo?: number;
 	//мощность двигателя ОТ (применятся в фильтре если > 0)
-	readonly PowerLSFrom?: number;
+	readonly powerLSFrom?: number;
 	//мощность двигателя ДО (применятся в фильтре если > 0)
-	readonly PowerLsTo?: number;
+	readonly powerLsTo?: number;
 }

@@ -2,15 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { VersioningType } from '@nestjs/common';
-import cors from 'cors';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    cors: {
-      credentials: true,
-      origin: true,
-    },
-  });
+  const app = await NestFactory.create(AppModule);
 
   app.enableVersioning({
     type: VersioningType.URI,
