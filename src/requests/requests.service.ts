@@ -6,6 +6,7 @@ import { NewRequestDto } from './dto/new-request.dto';
 import { RequestInfoDto } from './dto/request-info.dto';
 import { addRentRequestDto } from 'src/requests/dto/add-rent-request.dto';
 import { REQUEST_SOURCE } from './consts';
+import { AddVerificationRequestDto } from './dto/add-verification-request.dto';
 
 @Injectable()
 export class RequestsService {

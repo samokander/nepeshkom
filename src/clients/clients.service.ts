@@ -49,8 +49,6 @@ export class ClientsService {
 
   async addClientAccountSum(addSumDto: AddSumDto) {
     const addSumParams = {
-  async addClientAccountSum(addSumDto: AddSumDto) {
-    const addSumParams = {
       clientIntegrationId: addSumDto.clientIntegrationId,
       clientPhone: addSumDto.clientPhone,
       sum: addSumDto.sum,
