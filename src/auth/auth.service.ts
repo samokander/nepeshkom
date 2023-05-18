@@ -56,7 +56,6 @@ export class AuthService {
     let data = {};
 
     if (redisVerificationCode !== verificationCode) return { status, data };
-    await this.clientRedis.del(phoneNumber);
     const clients = await firstValueFrom(
       await this.clientsService.getAllClients({
         phoneNumber,
