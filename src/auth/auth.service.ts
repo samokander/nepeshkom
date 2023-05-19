@@ -50,12 +50,12 @@ export class AuthService {
   }
 
   async checkVerificationCode({ phoneNumber, verificationCode }) {
-    await this.clientRedis.set(phoneNumber, '12345');
     const redisVerificationCode = await this.clientRedis.get(phoneNumber);
     let status = false;
     let data = {};
 
     if (redisVerificationCode !== verificationCode) return { status, data };
+    await this.clientRedis.del(phoneNumber);
     const clients = await firstValueFrom(
       await this.clientsService.getAllClients({
         phoneNumber,
