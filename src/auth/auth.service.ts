@@ -23,19 +23,17 @@ export class AuthService {
       }),
     );
 
-    console.log(clients);
-
     if (clients?.Clients.length === 0) {
-      const res = await firstValueFrom(
+      await firstValueFrom(
         await this.clientsService.addClient({
           phoneNumber,
         }),
       );
-
-      console.log(res);
     }
 
-    const verificationCode = Math.floor(Math.random() * 100000).toString();
+    const verificationCode = (
+      Math.floor(Math.random() * (99999 - 10000)) + 10000
+    ).toString();
     await this.clientRedis.set(phoneNumber, verificationCode);
 
     const smsRes = await this.smsRu.sendSms({
@@ -43,10 +41,8 @@ export class AuthService {
       msg: verificationCode,
     });
 
-    console.log(smsRes);
-
     smsRes?.status === 'OK' ? HttpCode(200) : HttpCode(500);
-    return { status: smsRes?.status === 'OK' }
+    return { status: smsRes?.status === 'OK' };
   }
 
   async checkVerificationCode({ phoneNumber, verificationCode }) {
@@ -55,7 +51,7 @@ export class AuthService {
     let data = {};
 
     if (redisVerificationCode !== verificationCode) return { status, data };
-    await this.clientRedis.del(phoneNumber);
+
     const clients = await firstValueFrom(
       await this.clientsService.getAllClients({
         phoneNumber,
@@ -63,8 +59,9 @@ export class AuthService {
     );
 
     if (clients?.Clients?.[0]) {
+      await this.clientRedis.del(phoneNumber);
       status = true;
-      data = clients?.Clients?.[0]
+      data = clients?.Clients?.[0];
     }
 
     return { status, data };
