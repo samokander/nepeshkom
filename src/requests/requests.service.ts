@@ -109,7 +109,7 @@ export class RequestsService {
       States: getRentRequestsDto.states,
     };
     return this.httpService
-      .post(env.xprokatApiKey, {
+      .post(env.xprokatApiUrl, {
         ApiKey: env.xprokatApiKey,
         ApiVersion: 0,
         Method: 'GetRentRequests',
