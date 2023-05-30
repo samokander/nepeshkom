@@ -7,6 +7,7 @@ import { RequestInfoDto } from './dto/request-info.dto';
 import { addRentRequestDto } from 'src/requests/dto/add-rent-request.dto';
 import { REQUEST_SOURCE } from './consts';
 import { AddVerificationRequestDto } from './dto/add-verification-request.dto';
+import { GetRentRequestsDto } from './dto/get-rent-requests.dto';
 
 @Injectable()
 export class RequestsService {
@@ -93,6 +94,26 @@ export class RequestsService {
         ApiVersion: 0,
         Method: 'GetRentRequestInfo',
         Parameters: requestInfoParams,
+      })
+      .pipe(
+        map((response) =>
+          response.data.Result ? response.data.Result : response.data.Errors,
+        ),
+      );
+  }
+
+  async getRentRequests(getRentRequestsDto: GetRentRequestsDto) {
+    const params = {
+      ClientIntegrationId: getRentRequestsDto.clientIntegrationId,
+      RentRequestDealTypeId: getRentRequestsDto.rentRequestDealTypeId,
+      States: getRentRequestsDto.states,
+    };
+    return this.httpService
+      .post(env.xprokatApiKey, {
+        ApiKey: env.xprokatApiKey,
+        ApiVersion: 0,
+        Method: 'GetRentRequests',
+        Parameters: params,
       })
       .pipe(
         map((response) =>

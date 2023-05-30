@@ -26,7 +26,10 @@ export class RequestsController {
     return await this.requestsService.getRequestInfo(getRequestDto);
   }
 
-
+  @Post('/get-rent-requests')
+  async getRentRequests(@Body() getRentRequestsDto: GetRentRequestsDto) {
+    return await this.requestsService.getRentRequests(getRentRequestsDto);
+  }
 
   @Post('/add-verification-request')
   async addVerificationRequest(
@@ -36,11 +39,6 @@ export class RequestsController {
       addVerificationRequestDto,
     );
   }
-
-  // @Get('/get-request-info')
-  // async getRequestInfo(@Body() getRequestDto: RequestInfoDto) {
-  //   return await this.requestsService.getRequestInfo(getRequestDto);
-  // }
 
   @Get('/get-rent-info')
   async getRentRequestInfo(@Body() rentRequestInfoDto: RequestInfoDto) {
