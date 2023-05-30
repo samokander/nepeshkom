@@ -104,10 +104,11 @@ export class RequestsService {
 
   async getRentRequests(getRentRequestsDto: GetRentRequestsDto) {
     const params = {
-      ClientIntegrationId: getRentRequestsDto.clientIntegrationId,
-      RentRequestDealTypeId: getRentRequestsDto.rentRequestDealTypeId,
-      States: getRentRequestsDto.states,
+      ClientIntegrationId: getRentRequestsDto.ClientIntegrationId,
+      RentRequestDealTypeId: getRentRequestsDto.RentRequestDealTypeId,
+      States: getRentRequestsDto.States,
     };
+    console.log(getRentRequestsDto)
     return this.httpService
       .post(env.xprokatApiUrl, {
         ApiKey: env.xprokatApiKey,

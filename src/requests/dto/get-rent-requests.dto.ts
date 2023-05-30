@@ -5,7 +5,7 @@ export enum RequestState {
 }
 
 export class GetRentRequestsDto {
-  readonly clientIntegrationId: string;
-  readonly rentRequestDealTypeId: string | number;
-  readonly states?: RequestState;
+  readonly ClientIntegrationId: string;
+  readonly RentRequestDealTypeId: string | number;
+  readonly States?: RequestState;
 }
