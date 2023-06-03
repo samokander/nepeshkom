@@ -68,7 +68,7 @@ export class RequestsService {
       ReturnAddress: requestRentDto.returnAddress,
       RequestSource: REQUEST_SOURCE,
     };
-    console.log(requestRentDto)
+    console.log(requestRentDto);
     return this.httpService
       .post(env.xprokatApiUrl, {
         ApiKey: env.xprokatApiKey,
@@ -108,7 +108,7 @@ export class RequestsService {
       RentRequestDealTypeId: getRentRequestsDto.RentRequestDealTypeId,
       States: getRentRequestsDto.States,
     };
-    console.log(getRentRequestsDto)
+    console.log(getRentRequestsDto);
     return this.httpService
       .post(env.xprokatApiUrl, {
         ApiKey: env.xprokatApiKey,
@@ -135,11 +135,17 @@ export class RequestsService {
       RequestFilialId: addVerificationRequest.RequestFilialId,
     };
 
-    return this.httpService.post(env.xprokatApiUrl, {
-      ApiKey: env.xprokatApiKey,
-      ApiVersion: 0,
-      Method: 'AddVerificationRequest',
-      Parameters: params,
-    });
+    return this.httpService
+      .post(env.xprokatApiUrl, {
+        ApiKey: env.xprokatApiKey,
+        ApiVersion: 0,
+        Method: 'AddVerificationRequest',
+        Parameters: params,
+      })
+      .pipe(
+        map((response) =>
+          response.data.Result ? response.data.Result : response.data.Errors,
+        ),
+      );
   }
 }
