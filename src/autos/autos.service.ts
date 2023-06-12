@@ -115,34 +115,14 @@ export class AutosService {
   }
 
   async searchAutosWithFullAutoData(
-    searchWithFulLData: SearchAutosWithFullAutoDataDto,
+    searchWithFulLData,
   ) {
-    const searchWithFullDataParams = {
-      DateFrom: searchWithFulLData.dateFrom,
-      DateTo: searchWithFulLData.dateTo,
-      AutoClasses: searchWithFulLData.autoClasses,
-      FilialId: searchWithFulLData.filialId,
-      Brands: searchWithFulLData.brands,
-      Colors: searchWithFulLData.colors,
-      Transmissions: searchWithFulLData.transmissions,
-      BodyTypes: searchWithFulLData.bodyTypes,
-      PrivodTypes: searchWithFulLData.privodTypes,
-      ExpectedProlongation: searchWithFulLData.expectedProlongation,
-      ViewInDay: searchWithFulLData.viewInDay,
-      ViewMovements: searchWithFulLData.viewMovements,
-      ViewRepairs: searchWithFulLData.viewRepairs,
-      CleanRequestReservs: searchWithFulLData.cleanRequestReservs,
-      DefaultPriceFrom: searchWithFulLData.defaultPriceFrom,
-      DefaultPriceTo: searchWithFulLData.defaultPriceTo,
-      PowerLSFrom: searchWithFulLData.powerLSFrom,
-      PowerLsTo: searchWithFulLData.powerLsTo,
-    };
     return this.httpService
       .post(env.xprokatApiUrl, {
         ApiKey: env.xprokatApiKey,
         ApiVersion: 500,
         Method: 'SearchAutosWithFullAutoData',
-        Parameters: searchWithFullDataParams,
+        Parameters: searchWithFulLData,
       })
       .pipe(
         map((response) =>

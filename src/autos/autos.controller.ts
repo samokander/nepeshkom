@@ -1,4 +1,11 @@
-import { Controller, Get, Body, Param, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Body,
+  Param,
+  UseInterceptors,
+  Post,
+} from '@nestjs/common';
 import { AutosService } from './autos.service';
 import { GetAutoUsedIntervalsDto } from './dto/get-auto-used-intervals.dto';
 import { SearchAutoInputDto } from './dto/search-auto-input.dto';
@@ -15,10 +22,8 @@ export class AutosController {
     return await this.autosService.searchAutos(body);
   }
 
-  @Get('/search-with-full-data')
-  async searchAutosWithFullAutoData(
-    @Body() body: SearchAutosWithFullAutoDataDto,
-  ) {
+  @Post('/search-with-full-data')
+  async searchAutosWithFullAutoData(@Body() body) {
     return await this.autosService.searchAutosWithFullAutoData(body);
   }
 

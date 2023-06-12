@@ -129,7 +129,7 @@ export class RequestsService {
     const params = {
       ClientIntegrationId: addVerificationRequest.ClientIntegrationId,
       ClientPhone: addVerificationRequest.ClientPhone,
-      RequestSource: addVerificationRequest.RequestSource,
+      RequestSource: "ne-peshkom.com",
       DocumentUrls: addVerificationRequest.DocumentsUrls,
       RequestDealTypeId: addVerificationRequest.RequestDealTypeId,
       RequestFilialId: addVerificationRequest.RequestFilialId,
